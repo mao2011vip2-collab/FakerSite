@@ -126,6 +126,8 @@
       font-weight:bold;
       transition:0.3s;
       color:white;
+      border:none;
+      cursor:pointer;
     }
 
     .roblox{
@@ -143,7 +145,68 @@
       filter:brightness(1.1);
     }
 
-    /* ===== Info Section ===== */
+    /* ===== Popup ===== */
+
+    .popup-bg{
+      position:fixed;
+      inset:0;
+      background:rgba(0,0,0,0.6);
+      display:none;
+      justify-content:center;
+      align-items:center;
+      z-index:999;
+    }
+
+    .popup{
+      background:#111;
+      padding:30px;
+      width:350px;
+      border-radius:25px;
+      text-align:center;
+      border:1px solid rgba(255,255,255,0.08);
+      box-shadow:0 0 30px rgba(0,0,0,0.5);
+      animation:popupAnim 0.25s ease;
+    }
+
+    @keyframes popupAnim{
+      from{
+        transform:scale(0.8);
+        opacity:0;
+      }
+      to{
+        transform:scale(1);
+        opacity:1;
+      }
+    }
+
+    .popup h2{
+      margin-bottom:15px;
+      color:#00d084;
+    }
+
+    .popup p{
+      color:#d1d1d1;
+      line-height:1.6;
+      margin-bottom:25px;
+      font-size:17px;
+    }
+
+    .close-btn{
+      background:#ff4d4d;
+      border:none;
+      color:white;
+      padding:12px 25px;
+      border-radius:12px;
+      font-size:16px;
+      cursor:pointer;
+      transition:0.2s;
+    }
+
+    .close-btn:hover{
+      transform:scale(1.05);
+    }
+
+    /* ===== Section ===== */
 
     .section{
       padding:120px 10%;
@@ -163,46 +226,6 @@
       margin:auto;
     }
 
-    /* ===== Feature Cards ===== */
-
-    .cards{
-      display:grid;
-      grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
-      gap:30px;
-      margin-top:60px;
-    }
-
-    .card{
-      background:rgba(255,255,255,0.06);
-      border:1px solid rgba(255,255,255,0.08);
-      border-radius:25px;
-      padding:35px;
-      backdrop-filter:blur(10px);
-      transition:0.3s;
-    }
-
-    .card:hover{
-      transform:translateY(-10px);
-      box-shadow:0 0 25px rgba(255,255,255,0.08);
-    }
-
-    .card-icon{
-      font-size:50px;
-      margin-bottom:20px;
-    }
-
-    .card h3{
-      font-size:28px;
-      margin-bottom:15px;
-    }
-
-    .card p{
-      font-size:17px;
-      color:#cfcfcf;
-    }
-
-    /* ===== Footer ===== */
-
     footer{
       text-align:center;
       padding:40px;
@@ -211,33 +234,37 @@
       margin-top:50px;
     }
 
-    /* ===== Mobile ===== */
-
-    @media(max-width:700px){
-
-      h1{
-        font-size:50px;
-      }
-
-      .description{
-        font-size:18px;
-      }
-
-      .section h2{
-        font-size:35px;
-      }
-
-    }
-
   </style>
 </head>
 
 <body>
 
+  <!-- BACKGROUND -->
+
   <div class="bg">
     <div class="circle"></div>
     <div class="circle"></div>
     <div class="circle"></div>
+  </div>
+
+  <!-- POPUP -->
+
+  <div class="popup-bg" id="popupBg">
+
+    <div class="popup">
+
+      <h2>🎮 Oops!</h2>
+
+      <p>
+        Chưa có game nha, đợi admin làm xong đã 😄
+      </p>
+
+      <button class="close-btn" onclick="closePopup()">
+        ✖ Đóng
+      </button>
+
+    </div>
+
   </div>
 
   <!-- HERO -->
@@ -257,11 +284,13 @@
 
       <div class="buttons">
 
-        <a class="btn roblox"
-           href="LINK_ROBLOX"
-           target="_blank">
-           🎮 Play Roblox
-        </a>
+        <!-- ROBLOX BUTTON -->
+
+        <button class="btn roblox" onclick="openGame()">
+          🎮 Play Roblox
+        </button>
+
+        <!-- DISCORD BUTTON -->
 
         <a class="btn discord"
            href="https://discord.gg/2gPZTzYH6j"
@@ -284,43 +313,59 @@
     <p>
       Faker Game được tạo ra với mục tiêu mang đến trải nghiệm thư giãn,
       giải trí và vui vẻ cho mọi người chơi Roblox.
-      Bạn có thể khám phá thế giới độc đáo, chơi cùng bạn bè
-      và tận hưởng những khoảnh khắc thú vị mỗi ngày.
     </p>
-
-    <div class="cards">
-
-      <div class="card">
-        <div class="card-icon">🎮</div>
-        <h3>Fun Gameplay</h3>
-        <p>
-          Tham gia những hoạt động thú vị và giải trí trong Roblox.
-        </p>
-      </div>
-
-      <div class="card">
-        <div class="card-icon">👥</div>
-        <h3>Community</h3>
-        <p>
-          Kết nối với cộng đồng người chơi thân thiện và vui vẻ.
-        </p>
-      </div>
-
-      <div class="card">
-        <div class="card-icon">✨</div>
-        <h3>Relax</h3>
-        <p>
-          Tận hưởng khoảng thời gian thư giãn sau giờ học và làm việc.
-        </p>
-      </div>
-
-    </div>
 
   </section>
 
   <footer>
     © 2026 Faker Game - Official Website
   </footer>
+
+  <!-- SCRIPT -->
+
+  <script>
+
+    /*
+      ===========================
+      THÊM LINK GAME TẠI ĐÂY
+      ===========================
+
+      ❌ Nếu để trống:
+      const gameLink = "";
+
+      => sẽ hiện popup thông báo.
+
+      ✅ Nếu thêm link Roblox:
+      const gameLink = "https://www.roblox.com/games/123456789/Game";
+
+      => bấm nút sẽ mở game Roblox.
+    */
+
+    const gameLink = "";
+
+
+
+    function openGame(){
+
+      if(gameLink.trim() === ""){
+
+        document.getElementById("popupBg").style.display = "flex";
+
+      }else{
+
+        window.open(gameLink, "_blank");
+
+      }
+
+    }
+
+    function closePopup(){
+
+      document.getElementById("popupBg").style.display = "none";
+
+    }
+
+  </script>
 
 </body>
 </html>
